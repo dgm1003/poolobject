@@ -4,22 +4,27 @@
 package ubu.gii.dass.test.c01;
 
 import static org.junit.Assert.*;
+import ubu.gii.dass.c01.*;
 
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 
 /**
- * @author alumno
+ * @author Diego García Muñoz
+ * @author Óscar Valverde Escobar
  *
  */
 public class ReusablePoolTest {
 
+	ReusablePool pool, pool2;
 	/**
 	 * @throws java.lang.Exception
 	 */
 	@Before
 	public void setUp() throws Exception {
+		//a pool will be used on every test
+		pool = ReusablePool.getInstance();
 	}
 
 	/**
@@ -27,6 +32,9 @@ public class ReusablePoolTest {
 	 */
 	@After
 	public void tearDown() throws Exception {
+		//reset values
+		pool = null;
+		pool2 = null;
 	}
 
 	/**
@@ -34,6 +42,12 @@ public class ReusablePoolTest {
 	 */
 	@Test
 	public void testGetInstance() {
+		// test that the GetInstance method returns an object
+		assertNotNull(pool);
+		
+		// test that the method always returns the same object
+		pool2 = ReusablePool.getInstance();
+		assertEquals(pool, pool2);
 	}
 
 	/**
