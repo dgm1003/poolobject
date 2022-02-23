@@ -82,6 +82,37 @@ public class ReusablePoolTest {
 	 */
 	@Test
 	public void testReleaseReusable() {
+		try {
+			//empty the pool
+			resource = pool.acquireReusable();
+			resource2 = pool.acquireReusable();
+			
+			//test that if you release one reusable back into the pool,
+			//when you obtain it again it is the same
+			pool.releaseReusable(resource);
+			resource3 = pool.acquireReusable();
+			assertEquals(resource,resource3);
+		}
+		catch(Exception e){
+			fail();
+		}
+		
+		try {
+			//test that you can't release the same reusable into the pool twice
+			pool.releaseReusable(resource);
+			pool.releaseReusable(resource3);
+			fail();
+		}
+		catch(DuplicatedInstanceException e) {
+			try {
+				//test that you can release multiple different reusables
+				pool.releaseReusable(resource2);
+			}
+			catch(DuplicatedInstanceException e2) {
+				fail();
+			}
+			
+		}
 		
 	}
 
