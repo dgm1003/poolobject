@@ -19,6 +19,7 @@ public class ReusablePoolTest {
 
 	ReusablePool pool, pool2 = null;
 	Reusable resource, resource2,resource3 = null;
+	
 	/**
 	 * @throws java.lang.Exception
 	 */
@@ -36,6 +37,9 @@ public class ReusablePoolTest {
 		//reset values
 		pool = null;
 		pool2 = null;
+		resource = null;
+		resource2 = null;
+		resource3 = null;
 	}
 
 	/**
@@ -75,6 +79,14 @@ public class ReusablePoolTest {
 		catch(NotFreeInstanceException e){
 			assertNull(resource3);
 		}
+		
+		try {
+			pool.releaseReusable(resource);
+			pool.releaseReusable(resource2);
+		}	
+		catch(DuplicatedInstanceException e) {
+			fail();
+		}		
 	}
 
 	/**
@@ -92,15 +104,6 @@ public class ReusablePoolTest {
 			pool.releaseReusable(resource);
 			resource3 = pool.acquireReusable();
 			assertEquals(resource,resource3);
-		}
-		catch(NotFreeInstanceException e){
-			fail();
-		}
-		catch(DuplicatedInstanceException e){
-			fail();
-		}
-		
-		try {
 			//test that you can't release the same reusable into the pool twice
 			pool.releaseReusable(resource);
 			pool.releaseReusable(resource3);
@@ -116,7 +119,31 @@ public class ReusablePoolTest {
 			}
 			
 		}
-		
+		catch(NotFreeInstanceException e) {
+			fail();
+		}
 	}
 
+
+	/**
+	 * Test method for {@link ubu.gii.dass.c01.Reusable#util()}.
+	 */
+	@Test
+	public void testUseReusableUtil() {
+		try {
+			//test that util metod works and give different strings from two differen objets
+			resource = pool.acquireReusable();
+			assertEquals(resource.util(), resource.hashCode() + "  :Uso del objeto Reutilizable");
+			resource2 = pool.acquireReusable();
+			assertEquals(resource2.util(), resource2.hashCode() + "  :Uso del objeto Reutilizable");
+			assertNotEquals(resource.util(), resource2.util());
+			pool.releaseReusable(resource);
+			pool.releaseReusable(resource2);
+		}catch(NotFreeInstanceException e) {
+			fail();
+		}
+		catch(DuplicatedInstanceException e) {
+			fail();
+		}	
+	}
 }
