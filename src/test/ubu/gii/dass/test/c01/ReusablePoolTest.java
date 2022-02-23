@@ -146,4 +146,31 @@ public class ReusablePoolTest {
 			fail();
 		}	
 	}
+	
+	/**
+	 * Test method for {@link ubu.gii.dass.c01.Client#main()}.
+	 */
+	@Test
+	public void testMain() {
+		try {
+
+			Client client = new Client();
+			
+			//obtain the two reusables to save them in two variables, and return them to the pool
+			resource = pool.acquireReusable();
+			resource2 = pool.acquireReusable();
+			pool.releaseReusable(resource);
+			pool.releaseReusable(resource2);
+			
+			//run the main method
+			Client.main(null);
+			
+			//test that both reusables can be returned, since the main() method should
+			//have left the pool completely empty
+			pool.releaseReusable(resource);
+			pool.releaseReusable(resource2);
+		}catch(Exception e) {
+			fail();
+		}
+	}
 }
