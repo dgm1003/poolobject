@@ -93,7 +93,10 @@ public class ReusablePoolTest {
 			resource3 = pool.acquireReusable();
 			assertEquals(resource,resource3);
 		}
-		catch(Exception e){
+		catch(NotFreeInstanceException e){
+			fail();
+		}
+		catch(DuplicatedInstanceException e){
 			fail();
 		}
 		
