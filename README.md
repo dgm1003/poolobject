@@ -68,10 +68,16 @@ https://app.codecov.io/gh/dgm1003/poolobject/commits?page=1
 
 
 ### ¿Tiene calidad el conjunto de pruebas disponibles? <a name="c2"></a>
-Como se puede ver, se realiza una cobertura del 100% de las clases y métodos del proyecto (exceptuando la clase de test propia, lo cual sería imposible). Hemos diseñado los test para que se puedan realizar en cualquier orden deseado, y de modo que se capture un número elevado de posibles comportamientos. Por ejemplo:
+Como se puede ver, se realiza una cobertura del 100% de las clases y métodos del proyecto (exceptuando la clase de test propia, lo cual sería imposible). Hemos diseñado los test para que se puedan realizar en cualquier orden deseado, y de modo que se capture un número elevado de posibles comportamientos. Las diferentes pruebas que realizamos son:
+ - Comprobamos que al pedir instancias de un PoolObject siempre obtenemos el mismo objeto, y que dicho objeto no es null.
  -	Comprobamos que al obtener objetos de un PoolObject nuevo obtenemos un máximo de 2 objetos diferentes, y que al intentar obtener más el programa lanza la excepción correspondiente.
  -	Comprobamos que al devolver objetos al PoolObject solamente se podrá devolver cada objeto una vez, y si se intenta volver a meter sin haberlo sacado del pool, el programa lanza la excepción correspondiente.
  -	Comprobamos que el mensaje de los diferentes Reusables se genera correctamente.
+ -	Comprobamos que al ejecutarse el método main(), el pool acaba vacío
+
+También creamos dos casos de prueba que encontraron errores. Una vez detectados los errores, modificamos los casos de prueba para que pasasen como correctos cuando detectasen el error, pues en la práctica no teníamos que modificar los archivos originales, y de este modo conseguimos que nuestros commits pasen los checks de JavaCI y TravisCI, pues si no fuese el caso no se llegaría a comprobar la cobertura mediante codecov. Estos dos casos de prueba son los siguientes:  
+ -	Comprobamos que, al crear un nuevo objeto de tipo Reusable inicializado como null, no se pueda introducir al pool mediante la función releaseReusable().
+ -	Comprobamos que no sea posible introducir Reusables creados externamente, que hagan que el pool exceda el tamaño definido inicialmente (en este caso, 2).
 
 ![resumen de cobertura](images/calidad.png)
 
