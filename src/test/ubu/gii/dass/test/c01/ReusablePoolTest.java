@@ -25,7 +25,7 @@ public class ReusablePoolTest {
 	 */
 	@Before
 	public void setUp() throws Exception {
-		//a pool will be used on every test
+		//Generación de una instancia de pool
 		pool = ReusablePool.getInstance();
 	}
 
@@ -34,7 +34,7 @@ public class ReusablePoolTest {
 	 */
 	@After
 	public void tearDown() throws Exception {
-		//reset values
+		//reseteo de valores
 		pool = null;
 		pool2 = null;
 		resource = null;
@@ -47,10 +47,10 @@ public class ReusablePoolTest {
 	 */
 	@Test
 	public void testGetInstance() {
-		// test that the GetInstance method returns an object
+		// testeo de la instancia obtenida en la inicialización del test
 		assertNotNull(pool);
 		
-		// test that the method always returns the same object
+		// testeo de que el método getInstance() siempre devuelve 
 		pool2 = ReusablePool.getInstance();
 		assertEquals(pool, pool2);
 	}
@@ -60,7 +60,7 @@ public class ReusablePoolTest {
 	 */
 	@Test
 	public void testAcquireReusable() {
-		// test that adquiere all resources from the pool
+		// testeo de adquirir todos los recursos del pool
 		try {
 			resource = pool.acquireReusable();
 			assertNotNull(resource);
@@ -71,7 +71,7 @@ public class ReusablePoolTest {
 		catch(NotFreeInstanceException e){
 			fail();
 		}
-		// test that try adquiere one extra resource from the empty pool
+		// testeo de intentar adquirir un nuevo recurso extra del pool vacio
 		try {
 			resource3 = pool.acquireReusable();
 			fail();
@@ -95,29 +95,27 @@ public class ReusablePoolTest {
 	@Test
 	public void testReleaseReusable() {
 		try {
-			//empty the pool
+			//vaciamos el pool
 			resource = pool.acquireReusable();
-			resource2 = pool.acquireReusable();
-			
-			//test that if you release one reusable back into the pool,
-			//when you obtain it again it is the same
+			resource2 = pool.acquireReusable();		
+			//testeo de que al devolver un recurso al pool,
+			//cuando le obtienes de nuevo es igual
 			pool.releaseReusable(resource);
 			resource3 = pool.acquireReusable();
 			assertEquals(resource,resource3);
-			//test that you can't release the same reusable into the pool twice
+			//testeo de que no puedes devolver dos veces el mismo recurso al pool
 			pool.releaseReusable(resource);
 			pool.releaseReusable(resource3);
 			fail();
 		}
 		catch(DuplicatedInstanceException e) {
 			try {
-				//test that you can release multiple different reusables
+				//testeo de que se pueden devolver recursos diferentes
 				pool.releaseReusable(resource2);
 			}
 			catch(DuplicatedInstanceException e2) {
 				fail();
-			}
-			
+			}			
 		}
 		catch(NotFreeInstanceException e) {
 			fail();
@@ -131,7 +129,7 @@ public class ReusablePoolTest {
 	@Test
 	public void testUseReusableUtil() {
 		try {
-			//test that util metod works and give different strings from two differen objets
+			//testeo del metodo util del objeto reusable para comprobar que dos recursos distintos, devulven dos cadenas distintas
 			resource = pool.acquireReusable();
 			assertEquals(resource.util(), resource.hashCode() + "  :Uso del objeto Reutilizable");
 			resource2 = pool.acquireReusable();
@@ -153,20 +151,20 @@ public class ReusablePoolTest {
 	@Test
 	public void testMain() {
 		try {
-
+			//Prueba de instanciacion de la clase cliente
 			Client client = new Client();
 			
-			//obtain the two reusables to save them in two variables, and return them to the pool
+			//Obtenemos los dos recursos del pool para poder devolverles despues de la ejecución del main y evitar problemas con el resto de test
+			//porque este método no devolvía los recursos.
 			resource = pool.acquireReusable();
 			resource2 = pool.acquireReusable();
 			pool.releaseReusable(resource);
 			pool.releaseReusable(resource2);
 			
-			//run the main method
+			//Ejecución del metodo main
 			Client.main(null);
 			
-			//test that both reusables can be returned, since the main() method should
-			//have left the pool completely empty
+			//devolvemos los recursos al pool para que se pueda ejecutar el siguiente test
 			pool.releaseReusable(resource);
 			pool.releaseReusable(resource2);
 		}catch(Exception e) {
