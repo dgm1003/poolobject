@@ -55,6 +55,16 @@ Se han realizado las pruebas en la clase ubu.gii.dass.test.c01.ReuseblePoolTest.
 
 ## CUESTIONES <a name="cuestiones"></a>
 ### ¿Se ha realizado trabajo en equipo? <a name="c1"></a>
+Sí, se puede ver como hemos realizado commits intercalados entre los colaboradores, a lo largo de varias sesiones en las que trabajábamos en conjunto, y en cada uno de esos commits trabajábamos en alguna parte en concreto ha ido aumentando la cobertura progresivamente.
+
+![muestra de commits](images/equipo1.png)
+
+https://github.com/dgm1003/poolobject/graphs/contributors
+
+![muestra de cobertura](images/equipo2.png)
+
+https://app.codecov.io/gh/dgm1003/poolobject/commits?page=1
+
 
 ### ¿Tiene calidad el conjunto de pruebas disponibles? <a name="c2"></a>
 
