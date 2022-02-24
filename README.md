@@ -51,11 +51,12 @@ Los pasos para gestionar el procesos son los siguientes:
 6. Verificar el resultado de las pruebas en el pipeline de integración continua y cómo la calidad del producto va mejorando con las sucesivas integraciones.
 
 ## SOLUCIÓN <a name="solucion"></a>
-Se han realizado las pruebas en la clase ubu.gii.dass.test.c01.ReuseblePoolTest.java, 
+Se han realizado las pruebas en la clase _ubu.gii.dass.test.c01.ReuseblePoolTest.java_, completando los tres casos de prueba proporcionados, y añadiendo 4 nuevos casos de prueba para obtener una mayor cobertura de forma más organizada.
+También hemos excluido los ficheros de la carpeta de test del análisis de cobertura en codecov, modificando el fichero _.codecov.yml_, pues no tendría sentido analizar su cobertura.
 
 ## CUESTIONES <a name="cuestiones"></a>
 ### ¿Se ha realizado trabajo en equipo? <a name="c1"></a>
-Sí, se puede ver como hemos realizado commits intercalados entre los colaboradores, a lo largo de varias sesiones en las que trabajábamos en conjunto, y en cada uno de esos commits trabajábamos en alguna parte en concreto ha ido aumentando la cobertura progresivamente.
+Sí, se puede ver como hemos realizado commits intercalados entre los colaboradores, a lo largo de varias sesiones en las que trabajábamos en conjunto, y en cada uno de esos commits trabajábamos en alguna parte en concreto ha ido aumentando la cobertura progresivamente. El informe/Readme lo hemos realizado también en conjunto, en un word, aunque luego solamente uno haya hecho commits del readme ajustando el formato.
 
 ![muestra de commits](images/equipo1.png)
 
@@ -67,7 +68,24 @@ https://app.codecov.io/gh/dgm1003/poolobject/commits?page=1
 
 
 ### ¿Tiene calidad el conjunto de pruebas disponibles? <a name="c2"></a>
+Como se puede ver, se realiza una cobertura del 100% de las clases y métodos del proyecto (exceptuando la clase de test propia, lo cual sería imposible). Hemos diseñado los test para que se puedan realizar en cualquier orden deseado, y de modo que se capture un número elevado de posibles comportamientos. Por ejemplo:
+ -	Comprobamos que al obtener objetos de un PoolObject nuevo obtenemos un máximo de 2 objetos diferentes, y que al intentar obtener más el programa lanza la excepción correspondiente.
+ -	Comprobamos que al devolver objetos al PoolObject solamente se podrá devolver cada objeto una vez, y si se intenta volver a meter sin haberlo sacado del pool, el programa lanza la excepción correspondiente.
+ -	Comprobamos que el mensaje de los diferentes Reusables se genera correctamente.
+
+Se puede ver el nivel de cobertura con más detalle en: https://app.codecov.io/gh/dgm1003/poolobject/
+
 
 ### ¿Cuál es el esfuerzo invertido en realizar la actividad? <a name="c3"></a>
+Para medir el esfuerzo nos hemos centrado en varias métricas:
+ - Primero, hemos realizado **17 commits** entre ambos, los cuales han consistido de **250 adiciones y 3 borrados**, a lo largo de todos los ficheros del repositorio. 
+ - Comparado con la versión que se nos ha proporcionado, hemos añadido al fichero _ReusablePoolTest.java_ un total de **180 líneas de código**.
+ - Le hemos dedicado a esta práctica aproximadamente 8 horas de trabajo en conjunto, que al ser 2 colaboradores sería el equivalente a **16 horas** de trabajo total.
+
+Todas estas medidas han sido tomadas teniendo en cuenta el estado del repositorio en el commit anterior a terminar este archivo README.md.
+
+se pueden ver varias medidas del trabajo realizado en: https://github.com/dgm1003/poolobject/pulse
+
 
 ### ¿Cuál es el número de fallos encontrados en el código? <a name="c4"></a>
+Hemos encontrado varios fallos en el código, los cuales se han probado mediante dos nuevos test. Uno comprueba que es posible devolver recursos nulos al pool, los cuales originarán un NullPointerException al intentar utilizarlos posteriormente. El otro problema detectado es que se pueden devolver recursos al pool generados externamente, por lo que se podrían agregrar recursos no instanciados en su origen o descendientes de dichos recursos que modifiquen su comportamiento original. Además, se pueden devolver tantos recursos distintos como se quiera, por lo que se puede hacer crecer incrotroladamente el pool hasta saturar la memoria.
