@@ -171,4 +171,44 @@ public class ReusablePoolTest {
 			fail();
 		}
 	}
+	
+	@Test
+	public void testProblemNull() {
+		//vaciamos el pool
+		try {
+		resource = pool.acquireReusable();
+		resource2 = pool.acquireReusable();	
+		Reusable resourceNull = null;
+		//devolvemos un recurso nulo
+		pool.releaseReusable(resourceNull);
+		//aquirimos el recuso nul
+		resource3 = pool.acquireReusable();	
+		//intentamos ejecutar el metodo util
+		resource3.util();
+		//Reusable resourceFake = (Reusable) new Object();		
+		}
+		catch(DuplicatedInstanceException e) {
+			fail();			
+		}
+		catch(NotFreeInstanceException e) {
+			fail();
+		}
+		catch(NullPointerException e) {
+			//la ejecucion falla y comprobamos que el recurso 3 es nulo
+			assertEquals(resource3,null);
+			//devolvemos los recursos para el siguiente test
+			try {
+			pool.releaseReusable(resource);
+			pool.releaseReusable(resource2);
+			}
+			catch(DuplicatedInstanceException e2) {
+				fail();			
+			}
+		}
+	}
+	
+
 }
+
+
+
