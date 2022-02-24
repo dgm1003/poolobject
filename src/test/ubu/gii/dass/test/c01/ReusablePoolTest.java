@@ -207,7 +207,32 @@ public class ReusablePoolTest {
 		}
 	}
 	
-
+	@Test
+	public void testAddExtraResources() {
+		//creamos un nuevo recursol
+		Reusable extraResource = new Reusable();
+		try {
+			//devolvemos el recurso extra creado
+			pool.releaseReusable(extraResource);
+			//adquirimos un recurso
+			resource = pool.acquireReusable();	
+			//comprobamos que es el recurso extra anadido
+			assertEquals(resource,extraResource);
+			//comprobamos que  podemos obtener los dos recursos iniciales y que son distintos al recurso extra
+			resource2 = pool.acquireReusable();	
+			assertNotEquals(resource2,extraResource);
+			resource3 = pool.acquireReusable();	
+			assertNotEquals(resource3,extraResource);
+			pool.releaseReusable(resource2);
+			pool.releaseReusable(resource3);
+		}
+		catch(DuplicatedInstanceException e) {
+			fail();			
+		}
+		catch(NotFreeInstanceException e) {
+			fail();
+		}
+	}
 }
 
 
