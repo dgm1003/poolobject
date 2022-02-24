@@ -25,7 +25,7 @@ public class ReusablePoolTest {
 	 */
 	@Before
 	public void setUp() throws Exception {
-		//Generación de una instancia de pool
+		//Generacion de una instancia de pool
 		pool = ReusablePool.getInstance();
 	}
 
@@ -47,10 +47,10 @@ public class ReusablePoolTest {
 	 */
 	@Test
 	public void testGetInstance() {
-		// testeo de la instancia obtenida en la inicialización del test
+		// testeo de la instancia obtenida en la inicializacion del test
 		assertNotNull(pool);
 		
-		// testeo de que el método getInstance() siempre devuelve 
+		// testeo de que el metodo getInstance() siempre devuelve 
 		pool2 = ReusablePool.getInstance();
 		assertEquals(pool, pool2);
 	}
@@ -154,14 +154,14 @@ public class ReusablePoolTest {
 			//Prueba de instanciacion de la clase cliente
 			Client client = new Client();
 			
-			//Obtenemos los dos recursos del pool para poder devolverles despues de la ejecución del main y evitar problemas con el resto de test
-			//porque este método no devolvía los recursos.
+			//Obtenemos los dos recursos del pool para poder devolverles despues de la ejecucion del main y evitar problemas con el resto de test
+			//porque este metodo no devolvia los recursos.
 			resource = pool.acquireReusable();
 			resource2 = pool.acquireReusable();
 			pool.releaseReusable(resource);
 			pool.releaseReusable(resource2);
 			
-			//Ejecución del metodo main
+			//Ejecucion del metodo main
 			Client.main(null);
 			
 			//devolvemos los recursos al pool para que se pueda ejecutar el siguiente test
