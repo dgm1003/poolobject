@@ -58,11 +58,11 @@ También hemos excluido los ficheros de la carpeta de test del análisis de cobe
 ### ¿Se ha realizado trabajo en equipo? <a name="c1"></a>
 Sí, se puede ver como hemos realizado commits intercalados entre los colaboradores, a lo largo de varias sesiones en las que trabajábamos en conjunto, y en cada uno de esos commits trabajábamos en alguna parte en concreto ha ido aumentando la cobertura progresivamente. El informe/Readme lo hemos realizado también en conjunto, en un word, aunque luego solamente uno haya hecho commits del readme ajustando el formato.
 
-![muestra de commits](images/equipo1.png)
+<img src="https://raw.githubusercontent.com/dgm1003/poolobject/master/images/equipo1a.png" width="450" height="250"> <img src="https://raw.githubusercontent.com/dgm1003/poolobject/master/images/equipo1b.png" width="450" height="250"> 
 
 https://github.com/dgm1003/poolobject/graphs/contributors
 
-![muestra de cobertura](images/equipo2.png)
+![progreso de cobertura](images/equipo2.png)
 
 https://app.codecov.io/gh/dgm1003/poolobject/commits?page=1
 
@@ -72,6 +72,8 @@ Como se puede ver, se realiza una cobertura del 100% de las clases y métodos de
  -	Comprobamos que al obtener objetos de un PoolObject nuevo obtenemos un máximo de 2 objetos diferentes, y que al intentar obtener más el programa lanza la excepción correspondiente.
  -	Comprobamos que al devolver objetos al PoolObject solamente se podrá devolver cada objeto una vez, y si se intenta volver a meter sin haberlo sacado del pool, el programa lanza la excepción correspondiente.
  -	Comprobamos que el mensaje de los diferentes Reusables se genera correctamente.
+
+![resumen de cobertura](images/calidad.png)
 
 Se puede ver el nivel de cobertura con más detalle en: https://app.codecov.io/gh/dgm1003/poolobject/
 
@@ -84,7 +86,9 @@ Para medir el esfuerzo nos hemos centrado en varias métricas:
 
 Todas estas medidas han sido tomadas teniendo en cuenta el estado del repositorio en el commit anterior a terminar este archivo README.md.
 
-se pueden ver varias medidas del trabajo realizado en: https://github.com/dgm1003/poolobject/pulse
+![medidas de esfuerzo](images/esfuerzo.png)
+
+Se pueden ver varias medidas del trabajo realizado en: https://github.com/dgm1003/poolobject/pulse
 
 
 ### ¿Cuál es el número de fallos encontrados en el código? <a name="c4"></a>
